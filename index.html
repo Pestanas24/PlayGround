@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#17291f">
+  <title>ISLEBOUND — Wilds of the Lost Coast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game-shell">
+    <header class="topbar">
+      <div class="brand"><div class="brand-mark">✳</div><div><span class="brand-name">ISLEBOUND</span><span class="brand-sub">WILDS OF THE LOST COAST</span></div></div>
+      <div class="day-pill"><span class="sun-icon" id="weather-icon">☀</span><span id="day-label">DAY 01</span><i></i><span id="time-label">07:20</span></div>
+      <div class="top-right"><span class="save-status"><span class="live-dot"></span> FIELD LOG ACTIVE</span><button class="icon-button" id="sound-button" title="Toggle sound">♫</button><button class="icon-button" id="help-button" title="How to play">?</button></div>
+    </header>
+    <section class="game-layout">
+      <aside class="left-rail">
+        <section class="panel expedition-panel">
+          <div class="panel-kicker"><span class="kicker-line"></span> EXPEDITION LOG</div>
+          <div class="mission-heading">Make this<br><em>island</em> yours.</div>
+          <p class="mission-copy">Gather what you need. Build a safe haven. Outlast the wild.</p>
+          <div class="objective" id="objective-card"><div class="objective-icon">⌖</div><div><span class="objective-label">YOUR FIRST TASK</span><strong id="objective-text">Gather 5 wood to begin</strong><span class="objective-progress" id="objective-progress">0 / 5 collected</span></div></div>
+          <div class="log-divider"></div>
+          <div class="log-title">FIELD NOTES <span>NEWEST FIRST</span></div>
+          <div class="event-log" id="event-log" aria-live="polite"></div>
+        </section>
+        <section class="panel controls-panel">
+          <div class="panel-kicker"><span class="kicker-line"></span> SURVIVAL GUIDE</div>
+          <div class="control-row"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>Move around</span></div>
+          <div class="control-row"><kbd>E</kbd><span>Gather nearby</span></div>
+          <div class="control-row"><kbd>SPACE</kbd><span>Use spear / attack</span></div>
+          <div class="control-row"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><span>Select build</span></div>
+          <div class="guide-tip"><span>✦</span> Keep an eye out for movement in the palms.</div>
+        </section>
+      </aside>
+      <section class="play-area" aria-label="Island survival game">
+        <div class="canvas-wrap"><canvas id="game" aria-label="A tropical island with a stranded explorer and roaming dinosaurs"></canvas>
+          <div class="world-coords"><span class="coord-dot"></span> LOST COAST <span class="coords-divider">/</span> SECTOR 04</div>
+          <div class="threat-badge" id="threat-badge"><span>!</span> SOMETHING IS NEAR</div>
+          <div class="toast" id="toast"></div>
+          <div class="interaction-prompt" id="interaction-prompt"><kbd>E</kbd><span>Gather</span><strong id="prompt-name"></strong></div>
+          <div class="start-screen" id="start-screen"><div class="start-card"><div class="start-emblem">✳</div><div class="eyebrow">A SURVIVAL JOURNAL</div><h1>ISLE<span>BOUND</span></h1><p>Stranded beyond the charted waters. The island is alive—and it doesn't know you're supposed to be here.</p><div class="start-facts"><span>✦ GATHER</span><span>✦ CRAFT</span><span>✦ SURVIVE</span></div><button class="primary-button" id="start-button">STEP ASHORE <span>→</span></button><div class="start-footnote">WASD to move · E to gather · Build a shelter before nightfall</div></div></div>
+          <div class="game-over" id="game-over"><div class="start-card"><div class="eyebrow">EXPEDITION ENDED</div><h2 id="end-title">The island claims another.</h2><p id="end-copy">Your field journal ends here, but the island remains.</p><button class="primary-button" id="restart-button">TRY AGAIN <span>↻</span></button></div></div>
+          <div class="mobile-pad" id="mobile-pad"><button data-dir="up">▲</button><div><button data-dir="left">◀</button><button data-dir="down">▼</button><button data-dir="right">▶</button></div></div>
+          <button class="mobile-gather" id="mobile-gather">E<br><small>GATHER</small></button>
+        </div>
+        <div class="bottom-hud">
+          <div class="vitals">
+            <div class="vital"><div class="vital-top"><span class="heart">♥</span><span>HEALTH</span><b id="health-value">100</b></div><div class="meter"><i id="health-bar"></i></div></div>
+            <div class="vital"><div class="vital-top"><span class="hunger">◒</span><span>HUNGER</span><b id="hunger-value">100</b></div><div class="meter"><i id="hunger-bar"></i></div></div>
+            <div class="vital"><div class="vital-top"><span class="thirst">◉</span><span>THIRST</span><b id="thirst-value">100</b></div><div class="meter"><i id="thirst-bar"></i></div></div>
+          </div>
+          <div class="hotbar-wrap"><span class="hotbar-label">QUICK BUILD <small>SELECT & PLACE</small></span><div class="hotbar">
+            <button class="build-slot active" data-build="campfire"><kbd>1</kbd><span class="slot-icon">♨</span><span class="slot-name">CAMPFIRE</span></button>
+            <button class="build-slot" data-build="wall"><kbd>2</kbd><span class="slot-icon">▥</span><span class="slot-name">WOOD WALL</span></button>
+            <button class="build-slot" data-build="shelter"><kbd>3</kbd><span class="slot-icon">⌂</span><span class="slot-name">LEAN-TO</span></button>
+          </div></div>
+        </div>
+      </section>
+      <aside class="right-rail">
+        <section class="panel inventory-panel">
+          <div class="panel-head"><div><div class="panel-kicker"><span class="kicker-line"></span> YOUR PACK</div><h2>Supplies <span id="pack-count">0 / 40</span></h2></div><div class="pack-icon">▤</div></div>
+          <div class="resource-list" id="resource-list"></div>
+          <div class="inventory-note"><span>⌁</span> Everything you gather is yours to use.</div>
+        </section>
+        <section class="panel crafting-panel">
+          <div class="panel-head"><div><div class="panel-kicker"><span class="kicker-line"></span> WORKBENCH</div><h2>Make something</h2></div><span class="craft-symbol">⚒</span></div>
+          <div class="recipe-list" id="recipe-list"></div>
+        </section>
+        <div class="night-note"><div class="moon-mark">☾</div><div><strong>Night is coming</strong><span>Fire keeps the dark at bay.</span></div><span class="note-arrow">↗</span></div>
+        <div class="win-note" id="win-note"><span>✧</span> You made it through the night. The island is yours.</div>
+      </aside>
+    </section>
+    <footer class="footer"><span>AN UNCHARTED ISLAND · NO WAY BACK</span><span><i>✳</i> THE WILD REMEMBERS</span></footer>
+  </main>
+  <div class="modal-backdrop" id="help-modal"><div class="help-card"><button class="modal-close" id="close-help">×</button><div class="panel-kicker"><span class="kicker-line"></span> FIELD MANUAL</div><h2>Survive the island.</h2><p>Explore the shore and gather materials from the island. Craft a spear to defend yourself, and build a campfire or shelter before night falls.</p><div class="help-grid"><div><kbd>W A S D</kbd><span>Move</span></div><div><kbd>E</kbd><span>Gather nearby resources</span></div><div><kbd>SPACE</kbd><span>Attack with your spear</span></div><div><kbd>1 · 2 · 3</kbd><span>Select a build, then click nearby ground</span></div><div><kbd>CLICK</kbd><span>Gather / place selected build</span></div><div><kbd>R</kbd><span>Eat berries when hungry</span></div></div><button class="primary-button" id="got-it">GOT IT <span>→</span></button></div></div>
+  <script src="game.js"></script>
+</body>
+</html>
